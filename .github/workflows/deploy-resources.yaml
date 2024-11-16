@@ -34,7 +34,7 @@ jobs:
             $ParamsDev = @{
                 TemplateFilePath = "./infrastructure/cdw-automation.bicep"
                 TemplateParameterFilePath = "./infrastructure/cdw-automation.dev.bicepparam"
-                ResourceGroupName = "eit-vms-plc-dev-rg-1"
+                ResourceGroupName = "cdw-automation-dev-rg"
             }
 
             ./src/scripts/Deploy-ToResourceGroup.ps1 @ParamsDev
@@ -63,6 +63,7 @@ jobs:
             $ParamsProd = @{
                 TemplateFilePath = "./infrastructure/cdw-automation.bicep"
                 TemplateParameterFilePath = "./infrastructure/cdw-automation.prd.bicepparam"
+                ResourceGroupName = "cdw-automation-prd-rg"
             }
 
             ./src/scripts/Deploy-ToSubscription.ps1 @ParamsProd
