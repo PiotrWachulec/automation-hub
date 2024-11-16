@@ -32,8 +32,8 @@ jobs:
         with:
           inlineScript: |
             $ParamsDev = @{
-                TemplateFilePath = "./infrastructure/cdw-automation.bicep"
-                TemplateParameterFilePath = "./infrastructure/cdw-automation.dev.bicepparam"
+                TemplateFilePath = "./src/infra/cdw-automation.bicep"
+                TemplateParameterFilePath = "./src/infra/cdw-automation.dev.bicepparam"
                 ResourceGroupName = "cdw-automation-dev-rg"
             }
 
@@ -61,8 +61,8 @@ jobs:
         with:
           inlineScript: |
             $ParamsProd = @{
-                TemplateFilePath = "./infrastructure/cdw-automation.bicep"
-                TemplateParameterFilePath = "./infrastructure/cdw-automation.prd.bicepparam"
+                TemplateFilePath = "./src/infra/cdw-automation.bicep"
+                TemplateParameterFilePath = "./src/infra/cdw-automation.prd.bicepparam"
                 ResourceGroupName = "cdw-automation-prd-rg"
             }
 
