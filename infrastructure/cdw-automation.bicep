@@ -14,14 +14,14 @@ param projectShortName string = 'cdw'
   'prd'
   'dev'
 ])
-param environment string = 'dev'
+param env string = 'dev'
 
-var storageAccountName = '${replace(projectShortName, '-', '')}${substring(resourceGroup().id, 0, 3)}${environment}01sa'
-var appServicePlanName = '${projectName}-${environment}-01-asp'
-var functionAppName = '${projectName}-${environment}-01-fnapp'
-var managedIdentityName = '${projectName}-${environment}-01-id'
-var lawName = '${projectName}-${environment}-01-log'
-var applicationInsightsName = '${projectName}-${environment}-01-appi'
+var storageAccountName = '${replace(projectShortName, '-', '')}${substring(resourceGroup().id, 0, 3)}${env}01sa'
+var appServicePlanName = '${projectName}-${env}-01-asp'
+var functionAppName = '${projectName}-${env}-01-fnapp'
+var managedIdentityName = '${projectName}-${env}-01-id'
+var lawName = '${projectName}-${env}-01-log'
+var applicationInsightsName = '${projectName}-${env}-01-appi'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountName

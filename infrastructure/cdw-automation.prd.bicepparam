@@ -1,3 +1,3 @@
 using 'cdw-automation.bicep'
 
-param environment = 'prd'
+param env = 'prd'
