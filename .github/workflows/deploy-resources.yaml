@@ -66,5 +66,5 @@ jobs:
                 ResourceGroupName = "cdw-automation-prd-rg"
             }
 
-            ./scripts/Deploy-ToSubscription.ps1 @ParamsProd
+            ./scripts/Deploy-ToResourceGroup.ps1 @ParamsProd
           azPSVersion: "11.4.0"
