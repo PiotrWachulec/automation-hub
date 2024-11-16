@@ -16,7 +16,7 @@ param projectShortName string = 'cdw'
 ])
 param env string = 'dev'
 
-var storageAccountName = '${replace(projectShortName, '-', '')}${substring(resourceGroup().id, 0, 3)}${env}01sa'
+var storageAccountName = '${replace(projectShortName, '-', '')}${substring(uniqueString(resourceGroup().id), 0, 3)}${env}01sa'
 var appServicePlanName = '${projectName}-${env}-01-asp'
 var functionAppName = '${projectName}-${env}-01-fnapp'
 var managedIdentityName = '${projectName}-${env}-01-id'
