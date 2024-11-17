@@ -11,6 +11,12 @@ permissions:
     id-token: write
     contents: read
 
+env:
+  SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+  SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+  SPOTIFY_RADAR_PLAYLIST_ID: ${{ secrets.SPOTIFY_RADAR_PLAYLIST_ID }}
+  SPOTIFY_BACHATA_2024_PLAYLIST_ID: ${{ secrets.SPOTIFY_BACHATA_2024_PLAYLIST_ID }}
+
 jobs:
   deploy-dev:
     environment: dev
