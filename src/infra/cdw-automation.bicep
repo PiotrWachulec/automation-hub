@@ -16,12 +16,30 @@ param projectShortName string = 'cdw'
 ])
 param env string = 'dev'
 
+@secure()
+param spotifyClientId string
+
+@secure()
+param spotifyClientSecret string
+
+@secure()
+param spotifyRadarPlaylistId string
+
+@secure()
+param spotifyBachata2024PlaylistId string
+
 var storageAccountName = '${replace(projectShortName, '-', '')}${substring(uniqueString(resourceGroup().id), 0, 3)}${env}01sa'
 var appServicePlanName = '${projectName}-${env}-01-asp'
 var functionAppName = '${projectName}-${env}-01-fnapp'
 var managedIdentityName = '${projectName}-${env}-01-id'
 var lawName = '${projectName}-${env}-01-log'
 var applicationInsightsName = '${projectName}-${env}-01-appi'
+var keyVaultName = '${projectName}-${env}-01-appi'
+
+var spotifyClientIdSecretName = ''
+var spotifyClientSecretSecretName = ''
+var spotifyRadarPlaylistIdSecretName = ''
+var spotifyBachata2024PlaylistIdSecretName = ''
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountName
@@ -85,6 +103,22 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
           name: 'AZURE_CLIENT_ID'
           value: managedIdentity.properties.clientId
         }
+        {
+          name: spotifyClientIdSecretName
+          value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${spotifyClientIdSecret.name})'
+        }
+        {
+          name: spotifyClientSecretSecretName
+          value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${spotifyClientSecretSecret.name})'
+        }
+        {
+          name: spotifyRadarPlaylistIdSecretName
+          value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${spotifyRadarPlaylistIdSecret.name})'
+        }
+        {
+          name: spotifyBachata2024PlaylistIdSecretName
+          value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${spotifyBachata2024PlaylistIdSecret.name})'
+        }
       ]
       ftpsState: 'FtpsOnly'
       minTlsVersion: '1.2'
@@ -119,5 +153,51 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
     WorkspaceResourceId: law.id
     Application_Type: 'web'
     Request_Source: 'rest'
+  }
+}
+
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
+  name: keyVaultName
+  location: location
+  properties: {
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    tenantId: tenant().tenantId
+    enableRbacAuthorization: true
+    enabledForDeployment: true
+  }
+}
+
+resource spotifyClientIdSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+  parent: keyVault
+  name: spotifyClientIdSecretName
+  properties: {
+    value: spotifyClientId
+  }
+}
+
+resource spotifyClientSecretSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+  parent: keyVault
+  name: spotifyClientSecretSecretName
+  properties: {
+    value: spotifyClientSecret
+  }
+}
+
+resource spotifyRadarPlaylistIdSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+  parent: keyVault
+  name: spotifyRadarPlaylistIdSecretName
+  properties: {
+    value: spotifyRadarPlaylistId
+  }
+}
+
+resource spotifyBachata2024PlaylistIdSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
+  parent: keyVault
+  name: spotifyBachata2024PlaylistIdSecretName
+  properties: {
+    value: spotifyBachata2024PlaylistId
   }
 }
